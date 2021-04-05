@@ -1,8 +1,35 @@
 <%- include('header') -%>
 
-  Todo
+    <div class="bgr-view"></div>
 
-  <!-- Add dynamic number --> items left
+    <main>
+        <h1 class="title">Todo</h1>
+
+        <form action="/" method="POST">
+            <input type="checkbox" name="checkbox" onchange="this.form.submit()">
+            <input type="text" name="newItem">
+        </form>
+
+        <div>
+            
+        <% itemsArray.forEach(function(item){    %>
+            <input type="checkbox" name="checkbox">
+            <p> <%= item %></p>
+        <% });    %>
+            
+            
+            
+        </div>
+
+
+
+    </main>
+
+
+
+
+
+
 
   All
   Active 

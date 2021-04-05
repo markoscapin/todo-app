@@ -1,3 +1,32 @@
 .attribution { font-size: 11px; text-align: center; }
 .attribution a { color: hsl(228, 45%, 44%); }
 
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+/* This is the background img */
+.bgr-view {
+    height: 30vh;
+    width: 100vh;
+    content: "";
+    background-image: url("../images/bg-desktop-dark.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    
+}
+
+body {
+    background-color:hsl(235, 21%, 11%);
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+main {
+    margin: 5vh 25vw;
+}
