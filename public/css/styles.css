@@ -30,3 +30,51 @@ body {
 main {
     margin: 5vh 25vw;
 }
+
+input[type = "checkbox"] {
+    border-radius: 50%;
+}
+
+h1 {
+    display: inline;
+}
+
+/* Title box */
+.title-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Toggle button for Dark / Light mode */
+.toggle-img-mode {
+    background-color: transparent;
+    border: none;
+}
+
+.toggle-img-mode:focus {
+    outline: none;
+}
+
+/* Tasks boxes */
+.tasks-wrapper {
+    border-radius: 5px;
+    background-color: hsl(235, 24%, 19%);
+}
+
+.tasks-wrapper p {
+    display: inline-block;
+}
+
+.item-box {
+    padding: 1rem;
+    border-bottom: 1px solid hsl(233, 14%, 35%);
+}
+
+/* Box with items left and Clear Completed */
+.tasks-bottom {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.2rem 1rem;
+}
+
+

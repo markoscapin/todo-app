@@ -3,25 +3,48 @@
     <div class="bgr-view"></div>
 
     <main>
-        <h1 class="title">Todo</h1>
+        <div class="title-box">
+            <h1 class="title">Todo</h1>
+            <button class="toggle-img-mode">
+                <img src="images/icon-sun.svg" alt="">
+            </button>
+            
+        </div>
+        
 
-        <form action="/" method="POST">
+        <!-- This is to Create a new task -->
+        <form action="/" method="POST" class="item-box tasks-wrapper">
             <input type="checkbox" name="checkbox" onchange="this.form.submit()">
             <input type="text" name="newItem">
         </form>
 
-        <div>
+        
+
+        <!-- This is to display all items -->
+        <div class="tasks-wrapper" >
             
-        <% itemsArray.forEach(function(item){    %>
-            <input type="checkbox" name="checkbox">
-            <p> <%= item %></p>
-        <% });    %>
-            
-            
+            <% taskArray.forEach(function(task){    %>
+                <form action="/delete" method="POST" class="item-box">
+                    <input type="checkbox" name="checkbox" value="<%= task._id %>" onchange="this.form.submit()">
+                    <p> <%= task.name %></p>
+                </form>
+            <% });    %>
+
+
+            <div class="tasks-bottom">
+                <p> <%= taskArray.length %> items left </p>
+                <button>Clear Completed</button>
+            </div>
             
         </div>
 
-
+        <div class="tasks-wrapper">
+            <p>All</p>
+            <p>Active</p> 
+            <p>Completed</p>    
+        </div>
+    
+        <p>Drag and drop to reorder list</p>
 
     </main>
 
@@ -31,12 +54,10 @@
 
 
 
-  All
-  Active 
-  Completed
+  
 
-  Clear Completed
+  
 
-  Drag and drop to reorder list
+  
 
 <%- include('footer') -%>
