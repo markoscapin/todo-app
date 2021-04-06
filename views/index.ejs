@@ -24,10 +24,20 @@
         <div class="tasks-wrapper" >
             
             <% taskArray.forEach(function(task){    %>
-                <form action="/delete" method="POST" class="item-box">
-                    <input type="checkbox" name="checkbox" value="<%= task._id %>" onchange="this.form.submit()">
-                    <p> <%= task.name %></p>
-                </form>
+                <div>
+
+                    <form action="/delete" method="POST" class="item-box">
+                        <input type="checkbox" name="checkbox" value="<%= task._id %>" onchange="this.form.submit()">
+                        <p> <%= task.name %></p>
+                    </form>
+
+                    <button>
+                        <img src="images/icon-cross.svg" alt="">
+                    </button>
+                    
+                </div>
+                
+                
             <% });    %>
 
 
