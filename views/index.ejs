@@ -14,7 +14,7 @@
 
         <!-- This is to Create a new task -->
         <form action="/" method="POST" class="item-box tasks-wrapper">
-            <input type="checkbox" name="checkbox" onchange="this.form.submit()">
+            <button type="submit" name="checkbox" class="btn"></button>
             <input type="text" name="newItem">
         </form>
 
@@ -24,17 +24,25 @@
         <div class="tasks-wrapper" >
             
             <% taskArray.forEach(function(task){    %>
-                <div>
 
-                    <form action="/delete" method="POST" class="item-box">
-                        <input type="checkbox" name="checkbox" value="<%= task._id %>" onchange="this.form.submit()">
+                <div class="item-box">
+
+                    <form action="/taskCompleted" method="POST" >
+                        <input type="hidden" name="status" value="<%= task.status %>">
+                        <button class="btn" type="submit" name="checkbox" value="<%= task._id %>">
+                            <img src="" alt="">
+                        </button>
                         <p> <%= task.name %></p>
                     </form>
 
-                    <button>
-                        <img src="images/icon-cross.svg" alt="">
-                    </button>
+                    <form action="/deleteTask" method="POST">
+                        <button type="submit" name="deleteBox" value="<%= task._id %>">
+                            <img src="images/icon-cross.svg" alt="">
+                        </button>
+                    </form>
+
                     
+
                 </div>
                 
                 
@@ -49,11 +57,11 @@
         </div>
 
         <div class="tasks-wrapper">
-            <p>All</p>
-            <p>Active</p> 
-            <p>Completed</p>    
+            <a href="/">All</a>
+            <a href="/active">Active</a> 
+            <a href="/completed">Completed</a>    
         </div>
-    
+        
         <p>Drag and drop to reorder list</p>
 
     </main>

@@ -31,17 +31,38 @@ main {
     margin: 5vh 25vw;
 }
 
-input[type = "checkbox"] {
-    border-radius: 50%;
-}
 
 h1 {
     display: inline;
 }
 
+.btn {
+    background-color: transparent;
+    border-radius: 100%;
+    width: 20px;
+    height: 20px;
+    border: 1px solid hsl(236, 9%, 61%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.btn-check {
+    background: linear-gradient(-45deg, hsl(280, 87%, 65%),hsl(192, 100%, 67%));
+}
+
+.btn:focus {
+    outline: none;
+}
+
+
+
 /* Title box */
 .title-box {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
 }
 
