@@ -13,9 +13,9 @@
         
 
         <!-- This is to Create a new task -->
-        <form action="/" method="POST" class="item-box tasks-wrapper">
+        <form action="/" method="POST" class="item-box tasks-wrapper create-task">
             <button type="submit" name="checkbox" class="btn"></button>
-            <input type="text" name="newItem">
+            <input type="text" name="newItem" placeholder="Create a new todo..">
         </form>
 
         
@@ -36,15 +36,11 @@
                     </form>
 
                     <form action="/deleteTask" method="POST">
-                        <button type="submit" name="deleteBox" value="<%= task._id %>">
-                            <img src="images/icon-cross.svg" alt="">
+                        <button class="deleteBtn" type="submit" name="deleteBox" value="<%= task._id %>">
+                            
                         </button>
                     </form>
-
-                    
-
                 </div>
-                
                 
             <% });    %>
 
@@ -55,8 +51,8 @@
             </div>
             
         </div>
-
-        <div class="tasks-wrapper">
+        
+        <div id="menu" class="tasks-wrapper">
             <a href="/">All</a>
             <a href="/active">Active</a> 
             <a href="/completed">Completed</a>    

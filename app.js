@@ -44,7 +44,6 @@ function compareNumbers(a, b) {
 app.get("/", function(req, res) {
     Task.find({}, function(err, taskArray) {
 
-
         //.sort() return an orderedArray
         taskArray = taskArray.sort(compareNumbers);
 
@@ -94,8 +93,8 @@ app.post("/", function(req, res) {
         const newTask = new Task({name:newTaskToAdd, index: taskArray.length, status: false});
         newTask.save();
     });
-
-    res.redirect("/");
+    
+     res.redirect("/");
 
 })
 
