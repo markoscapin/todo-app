@@ -26,6 +26,9 @@ switch (currentPath) {
     case "/" : 
         rootPath.style.color = "hsl(220, 98%, 61%)"
         break;
+    case "/all":
+        rootPath.style.color = "hsl(220, 98%, 61%)"
+        break;
     case "/active" :
         activePath.style.color = "hsl(220, 98%, 61%)"
         break;

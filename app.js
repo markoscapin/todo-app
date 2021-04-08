@@ -10,7 +10,7 @@ const app = express();
 //SETUP AND USE 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended : true}));
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
 
 //MONGOOSE SECTION
@@ -40,8 +40,29 @@ function compareNumbers(a, b) {
 
 
 
+//global variable to know the previews path in case of redirect
+let previewsURLRequest = "";
+
+
 //APP --> GET
 app.get("/", function(req, res) {
+
+    if (previewsURLRequest == "" || previewsURLRequest == "/") {
+        Task.find({}, function(err, taskArray) {
+
+            //.sort() return an orderedArray
+            taskArray = taskArray.sort(compareNumbers);
+    
+            (err) ? console.log(err) : res.render('index', {taskArray: taskArray})
+            });
+    } else {
+        res.redirect("" + previewsURLRequest)
+    }
+    
+});
+
+app.get("/all", function(req, res) {
+    previewsURLRequest = req.originalUrl;
     Task.find({}, function(err, taskArray) {
 
         //.sort() return an orderedArray
@@ -49,9 +70,12 @@ app.get("/", function(req, res) {
 
         (err) ? console.log(err) : res.render('index', {taskArray: taskArray})
         });
-});
+})
+
 
 app.get("/active", function(req, res) {
+    //This provide path for the next redirect on ("/")
+    previewsURLRequest = req.originalUrl;
     Task.find({}, function(err, allTaskArray) {
 
         let taskArray = [];
@@ -64,11 +88,16 @@ app.get("/active", function(req, res) {
         taskArray = taskArray.sort(compareNumbers);
 
         (err) ? console.log(err) : res.render('index', {taskArray: taskArray})
+
+
     });
+    
 });
 
 
 app.get("/completed", function(req, res) {
+    //This provide path for the next redirect on ("/")
+    previewsURLRequest = req.originalUrl;
     Task.find({}, function(err, allTaskArray) {
 
         let taskArray = [];
@@ -82,6 +111,7 @@ app.get("/completed", function(req, res) {
 
         (err) ? console.log(err) : res.render('index', {taskArray: taskArray})
     });
+    
 })
 
 
@@ -94,11 +124,11 @@ app.post("/", function(req, res) {
         newTask.save();
     });
     
-     res.redirect("/");
-
+    res.redirect("/");
 })
 
 app.post("/taskCompleted", function(req, res) {
+
     const taskCompletedID = req.body.checkbox;
 
     Task.findById(taskCompletedID, function(err, task) {
@@ -110,6 +140,7 @@ app.post("/taskCompleted", function(req, res) {
 });
 
 app.post("/deleteTask", function(req, res) {
+
     const taskToDeleteID = req.body.deleteBox;
 
     //this delete the selected item by id
