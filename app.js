@@ -152,6 +152,12 @@ app.post("/deleteTask", function(req, res) {
     });
 });
 
+app.post("/drag", function(req, res) {
+    console.log(req.body.startOnIndex);
+    console.log(req.body.dropOnIndex);
+    res.redirect("/");
+})
+
 
 
 //APP --> LISTEN

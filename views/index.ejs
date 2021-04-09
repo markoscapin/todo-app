@@ -21,17 +21,22 @@
         
 
         <!-- This is to display all items -->
-        <div class="tasks-wrapper" >
+        <div class="tasks-wrapper">
             
             <% taskArray.forEach(function(task){    %>
 
-                <div class="item-box">
+                <div class="item-box" draggable="true" ondragover="return false" ondragstart="setDragger('<%= task.index %>')" >
 
                     <form action="/taskCompleted" method="POST" >
+                        <input type="hidden" name="index" value="<%= task.index %>">
+                        <input type="hidden" name="nextIndex" value="">
+
                         <input type="hidden" name="status" value="<%= task.status %>">
                         <button class="btn" type="submit" name="checkbox" value="<%= task._id %>">
                             <img src="" alt="">
                         </button>
+
+
                         <p> <%= task.name %></p>
                     </form>
 
@@ -44,19 +49,20 @@
                 
             <% });    %>
 
-
-            <div class="tasks-bottom">
-                <p> <%= taskArray.length %> items left </p>
-                <button>Clear Completed</button>
+        </div>
+        <div class="tasks-wrapper tasks-bottom">
+            <p> <%= taskArray.length %> items left </p>
+            <div id="menu" class="tasks-wrapper">
+                <a href="/all">All</a>
+                <a href="/active">Active</a> 
+                <a href="/completed">Completed</a>    
             </div>
+            <button>Clear Completed</button>
+        </div>
             
-        </div>
         
-        <div id="menu" class="tasks-wrapper">
-            <a href="/all">All</a>
-            <a href="/active">Active</a> 
-            <a href="/completed">Completed</a>    
-        </div>
+        
+
         
         <p>Drag and drop to reorder list</p>
 

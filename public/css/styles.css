@@ -39,13 +39,15 @@ h1 {
 form {
     display: flex;
     align-items: center;
+    
 }
 
 #menu {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    padding: 0.75rem 20%;
+    max-width: 50%;
+    min-width: 30%;
 }
 
 #menu a {
@@ -56,6 +58,7 @@ form {
 #menu a:hover, #menu a:active {
     color: white;
 }
+
 
 
 .btn {
@@ -121,6 +124,7 @@ input[type="text"] {
 .item-box.create-task {
     justify-content: flex-start;
     border-bottom: none;
+    border-radius: 5px;
 }
 
 
@@ -137,9 +141,15 @@ input[type="text"] {
 
 /* Tasks boxes */
 .tasks-wrapper {
-    border-radius: 5px;
+    border-radius: 5px 5px 0 0;
     background-color: hsl(235, 24%, 19%);
-    margin: 1rem 0;
+    margin-top: 1rem;
+
+}
+
+.tasks-wrapper.tasks-bottom {
+    border-radius: 0 0 5px 5px;
+    margin: 0 0 1rem 0;
 
 }
 
@@ -154,6 +164,8 @@ input[type="text"] {
     border-bottom: 1px solid hsl(233, 14%, 35%);
     display: flex;
     justify-content: space-between;
+    
+    border-radius: 5px 5px 0 0;
 }
 
 /* Box with items left and Clear Completed */
