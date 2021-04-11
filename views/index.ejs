@@ -25,7 +25,7 @@
             
             <% taskArray.forEach(function(task){    %>
 
-                <div class="item-box" draggable="true" ondragover="return false" ondragstart="setDragger('<%= task.index %>')" >
+                <div class="item-box" draggable="true" ondragover="return false" ondragstart="setDragger('<%= task.index %>', '<%= task._id %>')" >
 
                     <form action="/taskCompleted" method="POST" >
                         <input type="hidden" name="index" value="<%= task.index %>">

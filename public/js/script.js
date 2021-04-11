@@ -20,7 +20,8 @@ function post(path, params, method='post') {
         hiddenField.type = 'hidden';
         hiddenField.name = key;
         hiddenField.value = params[key];
-  
+
+
         form.appendChild(hiddenField);
       }
     }
@@ -29,8 +30,9 @@ function post(path, params, method='post') {
     form.submit();
 };
 
-function setDragger(index) {
+function setDragger(index, id) {
     elementIndex = index
+    elementID = id;
 };
 
 
@@ -66,6 +68,7 @@ switch (currentPath) {
 //Testing area
 let box = document.querySelectorAll(".tasks-wrapper .item-box")
 let elementIndex="";
+let elementID = "";
 let nextIndex = "";
 
 //This is to add the listener and make a POST request to change the index value to db
@@ -82,7 +85,8 @@ for (let i = 0; i < box.length; i++) {
     }, false);
     
     box[i].addEventListener('drop', function(event) {  
-        post("/drag", {startOnIndex: elementIndex, dropOnIndex: nextIndex.value})
+
+        post("/drag", {startOnIndex: elementIndex, dropOnIndex: nextIndex.value, id : elementID})
     })
 };
 

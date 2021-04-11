@@ -153,10 +153,52 @@ app.post("/deleteTask", function(req, res) {
 });
 
 app.post("/drag", function(req, res) {
-    console.log(req.body.startOnIndex);
-    console.log(req.body.dropOnIndex);
+    const currentIndex = req.body.startOnIndex;
+    const nextIndex = req.body.dropOnIndex;
+    const elementID = req.body.id;
+
+    //To tackle the movements of indexes of elements we need to know:
+    //1- the RANGE between the currentIndex and the nextIndex
+    //2- if the movement is going UP or DOWN 
+
+    //Also we need to know:
+    //1- the range change depending on the movement
+    //2- we need to update the current value on db to show the differences with sort() 
+
+    Task.find({}, function(err, docs) {
+        (err) ? console.log(err) : console.log("goingtoDB");
+
+        //First of all we need to know the minimum and the maximum value of the range
+        const rangeMin = Math.min(currentIndex, nextIndex);
+        const rangeMax = Math.max(currentIndex, nextIndex);
+
+        docs.forEach(function(task) {
+
+            //If the movement is to going UP 
+            if (currentIndex > nextIndex && task.index >= rangeMin && task.index < rangeMax) {
+
+                Task.findByIdAndUpdate(task._id, {index: task.index + 1}, function(err) {
+                    (err) ? console.log(err) : console.log("Successfully updated index of " + task.name)
+                })
+
+            //If the movement is to going DOWN
+            } else if (currentIndex < nextIndex && task.index > rangeMin && task.index <= rangeMax ) {
+                Task.findByIdAndUpdate(task._id, {index : task.index -1}, function(err) {
+                    (err) ? console.log(err) : console.log("Successfully updated index of " + task.name)
+                });
+            } 
+
+        })
+            
+
+        Task.findByIdAndUpdate(elementID, {index: nextIndex}, function(err) {
+            (err) ? console.log(err) : console.log("Was " + currentIndex)
+        });
+    });
+
+
     res.redirect("/");
-})
+});
 
 
 
