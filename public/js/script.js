@@ -1,10 +1,14 @@
 let array = document.querySelectorAll(".item-box");
-
 let currentPath = document.location.pathname;
 const menu = document.querySelectorAll("#menu a");
 const rootPath = menu[0];
 const activePath = menu[1];
 const completedPath = menu[2];
+let box = document.querySelectorAll(".tasks-wrapper .item-box")
+let elementIndex="";
+let elementID = "";
+let nextIndex = "";
+
 
 //This function allow us to make a POST request
 function post(path, params, method='post') {
@@ -30,12 +34,10 @@ function post(path, params, method='post') {
     form.submit();
 };
 
-function setDragger(index, id) {
+function setDragger(index, id, e) {
     elementIndex = index
     elementID = id;
 };
-
-
 
 for (let i= 1; i < array.length; i++) {
     let status = array[i].querySelector("input").value;
@@ -65,18 +67,12 @@ switch (currentPath) {
         break;
 };
 
-//Testing area
-let box = document.querySelectorAll(".tasks-wrapper .item-box")
-let elementIndex="";
-let elementID = "";
-let nextIndex = "";
 
 //This is to add the listener and make a POST request to change the index value to db
-for (let i = 0; i < box.length; i++) {
-    
-    box[i].addEventListener('dragenter', function(event) {
+box.forEach(function(task) {
+    task.addEventListener('dragenter', function(event) {
         if (event) {
-            nextIndex = box[i].querySelector("[name='index']")
+            nextIndex = task.querySelector("[name='index']")
             console.log("Next Index :" + nextIndex.value)
         } else {
             console.log("Event ERROR")
@@ -84,11 +80,14 @@ for (let i = 0; i < box.length; i++) {
 
     }, false);
     
-    box[i].addEventListener('drop', function(event) {  
+    task.addEventListener('drop', function(event) {  
 
         post("/drag", {startOnIndex: elementIndex, dropOnIndex: nextIndex.value, id : elementID})
     })
-};
+})
+
+
+
 
 
 
