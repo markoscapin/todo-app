@@ -1,30 +1,39 @@
-.attribution { font-size: 11px; text-align: center; }
-.attribution a { color: hsl(228, 45%, 44%); }
+/* VARIABLES */
+
+:root {
+
+    /* Light Mode */
+    --l-background: hsl(0, 0%, 98%);
+
+
+
+    /* Dark Mode */
+    --d-background: hsl(235, 21%, 11%);
+
+
+
+
+
+
+
+}
+
+
+
+/* TAGS */
 
 * {
     margin: 0;
     box-sizing: border-box;
 }
 
-
-/* This is the background img */
-.bgr-view {
-    height: 30vh;
-    width: 100vw;
-    content: "";
-    background-image: url("../images/bg-desktop-dark.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    
+body {
+    background-color:var(--d-mode);
+    font-family: 'Josefin Sans', sans-serif;
 }
 
-body {
-    background-color:hsl(235, 21%, 11%);
-    font-family: 'Josefin Sans', sans-serif;
+button {
+    font-family: 'Josefin Sans', sans-serif!important;
 }
 
 main {
@@ -41,6 +50,18 @@ form {
     align-items: center;
     
 }
+
+input, button {
+    outline: none;
+}
+
+input[type="text"] {
+    background-color: transparent;
+    border: none;
+}
+
+
+/* IDs */
 
 #menu {
     display: flex;
@@ -59,7 +80,32 @@ form {
     color: white;
 }
 
+#clear-Completed {
+    border-radius: 10px;
+    background-color: #DC3545;
+    border: none;
+}
 
+
+
+/* CLASSES */
+
+.attribution { font-size: 11px; text-align: center; }
+.attribution a { color: hsl(228, 45%, 44%); }
+
+/* This is the background img */
+.bgr-view {
+    height: 30vh;
+    width: 100vw;
+    content: "";
+    background-image: url("../images/bg-desktop-dark.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
 
 .btn {
     background-color: transparent;
@@ -100,14 +146,6 @@ form {
 }
 
 
-
-input, button {
-    outline: none;
-    
-}
-
-
-
 /* Title box */
 .title-box {
     display: flex;
@@ -115,10 +153,6 @@ input, button {
     justify-content: space-between;
 }
 
-input[type="text"] {
-    background-color: transparent;
-    border: none;
-}
 
 /* This is to modify the first input box */
 .item-box.create-task {
@@ -129,13 +163,13 @@ input[type="text"] {
 
 
 /* Toggle button for Dark / Light mode */
-.toggle-img-mode {
+.toggle-mode {
     background-color: transparent;
     border: none;
     
 }
 
-.toggle-img-mode:focus {
+.toggle-mode:focus {
     outline: none;
 }
 
@@ -164,8 +198,6 @@ input[type="text"] {
     border-bottom: 1px solid hsl(233, 14%, 35%);
     display: flex;
     justify-content: space-between;
-    
-    border-radius: 5px 5px 0 0;
 }
 
 /* Box with items left and Clear Completed */
@@ -174,5 +206,22 @@ input[type="text"] {
     justify-content: space-between;
     padding: 1.2rem 1rem;
 }
+
+/* DRAG AND DROP CONTROLLERS */
+.not-selected {
+    opacity: 0.5;
+    border-radius: 5px;
+}
+
+.drop-zone {
+    background-color: white;
+    border-radius: 5px;
+}
+
+
+.hidden-delete-form {
+    display: none;
+}
+
 
 

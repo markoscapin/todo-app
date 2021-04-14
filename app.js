@@ -152,6 +152,27 @@ app.post("/deleteTask", function(req, res) {
     });
 });
 
+app.post("/deleteAllCompleted", function(req, res) {
+
+    //Find all docs and if the doc has as propery status "true" than remove it.
+    Task.find({}, function(err, docs) {
+        (err) ? console.log(err) : console.log("goingtoDB");
+
+        docs.forEach(function(task) {
+            console.log(task.status)
+            
+            if (task.status == true) {
+                Task.findByIdAndRemove(task._id, function(err){
+                    (err) ? console.log(err) : console.log("Successfully delete record")
+                })
+            }
+        })
+    })
+
+    res.redirect("/");
+})
+
+
 app.post("/drag", function(req, res) {
     const currentIndex = req.body.startOnIndex;
     const nextIndex = req.body.dropOnIndex;

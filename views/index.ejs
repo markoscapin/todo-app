@@ -5,7 +5,7 @@
     <main>
         <div class="title-box">
             <h1 class="title">Todo</h1>
-            <button class="toggle-img-mode">
+            <button class="toggle-mode">
                 <img src="images/icon-sun.svg" alt="">
             </button>
             
@@ -40,7 +40,7 @@
                         <p> <%= task.name %></p>
                     </form>
 
-                    <form action="/deleteTask" method="POST">
+                    <form id="deleteTask" class="hidden-delete-form" action="/deleteTask" method="POST">
                         <button class="deleteBtn" type="submit" name="deleteBox" value="<%= task._id %>">
                             
                         </button>
@@ -57,7 +57,7 @@
                 <a href="/active">Active</a> 
                 <a href="/completed">Completed</a>    
             </div>
-            <button>Clear Completed</button>
+            <button id="clear-Completed">Clear Completed</button>
         </div>
             
         
