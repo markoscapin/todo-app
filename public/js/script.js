@@ -1,10 +1,9 @@
-let array = document.querySelectorAll(".item-box");
+let boxArray = document.querySelectorAll(".tasks-wrapper .item-box")
 let currentPath = document.location.pathname;
 const menu = document.querySelectorAll("#menu a");
 const rootPath = menu[0];
 const activePath = menu[1];
 const completedPath = menu[2];
-let box = document.querySelectorAll(".tasks-wrapper .item-box")
 let elementIndex="";
 let elementID = "";
 let nextIndex = "";
@@ -39,19 +38,6 @@ function setDragger(index, id, e) {
     elementID = id;
 };
 
-for (let i= 1; i < array.length; i++) {
-    let status = array[i].querySelector("input").value;
-    let button = array[i].querySelector(".btn");
-    let img = array[i].querySelector("img");
-    let text = array[i].querySelector("p");
-
-    if (status === "true") {
-        button.classList.add("btn-check");
-        img.src = "images/icon-check.svg";
-        text.style.textDecoration = "line-through";
-    } else { }
-};
-
 switch (currentPath) {
     case "/" : 
         rootPath.style.color = "hsl(220, 98%, 61%)"
@@ -69,7 +55,7 @@ switch (currentPath) {
 
 
 //This is to add the listener and make a POST request to change the index value to db
-box.forEach(function(task) {
+boxArray.forEach(function(task) {
     task.addEventListener('dragenter', function(event) {
         if (event) {
             nextIndex = task.querySelector("[name='index']")
@@ -83,7 +69,19 @@ box.forEach(function(task) {
     task.addEventListener('drop', function(event) {  
 
         post("/drag", {startOnIndex: elementIndex, dropOnIndex: nextIndex.value, id : elementID})
-    })
+    });
+
+    let status = task.querySelector("[name='status']").value;
+    let button = task.querySelector(".btn");
+    let img = task.querySelector("img");
+    let text = task.querySelector("p");
+
+    if (status == "true") {
+        button.classList.add("btn-check");
+        img.src = "images/icon-check.svg";
+        text.style.textDecoration = "line-through";
+    }
+
 })
 
 
