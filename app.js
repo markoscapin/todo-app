@@ -7,6 +7,12 @@ const { functionsIn } = require("lodash");
 
 const app = express();
 
+
+
+let currentMode = "";
+
+
+
 //SETUP AND USE 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended : true}));
@@ -53,7 +59,7 @@ app.get("/", function(req, res) {
             //.sort() return an orderedArray
             taskArray = taskArray.sort(compareNumbers);
     
-            (err) ? console.log(err) : res.render('index', {taskArray: taskArray})
+            (err) ? console.log(err) : res.render('index', {taskArray: taskArray, currentMode : currentMode})
             });
     } else {
         res.redirect("" + previewsURLRequest)
@@ -68,7 +74,7 @@ app.get("/all", function(req, res) {
         //.sort() return an orderedArray
         taskArray = taskArray.sort(compareNumbers);
 
-        (err) ? console.log(err) : res.render('index', {taskArray: taskArray})
+        (err) ? console.log(err) : res.render('index', {taskArray: taskArray, currentMode : currentMode})
         });
 })
 
@@ -87,7 +93,7 @@ app.get("/active", function(req, res) {
 
         taskArray = taskArray.sort(compareNumbers);
 
-        (err) ? console.log(err) : res.render('index', {taskArray: taskArray})
+        (err) ? console.log(err) : res.render('index', {taskArray: taskArray, currentMode : currentMode})
 
 
     });
@@ -109,7 +115,7 @@ app.get("/completed", function(req, res) {
 
         taskArray = taskArray.sort(compareNumbers);
 
-        (err) ? console.log(err) : res.render('index', {taskArray: taskArray})
+        (err) ? console.log(err) : res.render('index', {taskArray: taskArray, currentMode : currentMode})
     });
     
 })
@@ -221,6 +227,11 @@ app.post("/drag", function(req, res) {
     res.redirect("/");
 });
 
+
+app.post("/mode", function(req, res) {
+    currentMode = req.body.setMode;
+    res.redirect("/");
+})
 
 
 //APP --> LISTEN

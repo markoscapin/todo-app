@@ -6,7 +6,8 @@
         <div class="title-box">
             <h1 class="title">Todo</h1>
             <button class="toggle-mode">
-                <img src="images/icon-sun.svg" alt="">
+                <input type="hidden" name="mode" value="<%= currentMode %>" >
+                <img src="" alt="">
             </button>
             
         </div>
@@ -21,63 +22,59 @@
         
 
         <!-- This is to display all items -->
-        <div class="tasks-wrapper">
-            
-            <% taskArray.forEach(function(task){    %>
+        <div class="tasks-container">
 
-                <div class="item-box" draggable="true" ondragover="return false" ondragstart="setDragger('<%= task.index %>', '<%= task._id %>')" >
-
-                    <form action="/taskCompleted" method="POST" >
-                        <input type="hidden" name="index" value="<%= task.index %>">
-                        <input type="hidden" name="nextIndex" value="">
-
-                        <input type="hidden" name="status" value="<%= task.status %>">
-                        <button class="btn" type="submit" name="checkbox" value="<%= task._id %>">
-                            <img src="" alt="">
-                        </button>
-
-
-                        <p> <%= task.name %></p>
-                    </form>
-
-                    <form id="deleteTask" class="hidden-delete-form" action="/deleteTask" method="POST">
-                        <button class="deleteBtn" type="submit" name="deleteBox" value="<%= task._id %>">
-                            
-                        </button>
-                    </form>
-                </div>
+        
+            <div class="tasks-wrapper">
                 
-            <% });    %>
+                <% taskArray.forEach(function(task){    %>
 
-        </div>
-        <div class="tasks-wrapper tasks-bottom">
-            <p> <%= taskArray.length %> items left </p>
-            <div id="menu" class="tasks-wrapper">
-                <a href="/all">All</a>
-                <a href="/active">Active</a> 
-                <a href="/completed">Completed</a>    
+                    <div class="item-box" draggable="true" ondragover="return false" ondragstart="setDragger('<%= task.index %>', '<%= task._id %>')" >
+
+                        <form action="/taskCompleted" method="POST" >
+                            <input type="hidden" name="index" value="<%= task.index %>">
+                            <input type="hidden" name="nextIndex" value="">
+
+                            <input type="hidden" name="status" value="<%= task.status %>">
+                            <button class="btn" type="submit" name="checkbox" value="<%= task._id %>">
+                                <img src="" alt="">
+                            </button>
+
+
+                            <p> <%= task.name %></p>
+                        </form>
+
+                        <form id="deleteTask" class="hidden-delete-form" action="/deleteTask" method="POST">
+                            <button class="deleteBtn" type="submit" name="deleteBox" value="<%= task._id %>">
+                                
+                            </button>
+                        </form>
+                    </div>
+                    
+                <% });    %>
+
             </div>
-            <button id="clear-Completed">Clear Completed</button>
+            <div class=" tasks-bottom">
+                <p> <%= taskArray.length %> items left </p>
+                <div id="menu">
+                    <a href="/all">All</a>
+                    <a href="/active">Active</a> 
+                    <a href="/completed">Completed</a>    
+                </div>
+                <button id="clear-Completed">Clear Completed</button>
+            </div>
         </div>
             
         
         
 
         
-        <p>Drag and drop to reorder list</p>
+        <p id="info-descr">Drag and drop to reorder list</p>
 
     </main>
 
 
 
 
-
-
-
-  
-
-  
-
-  
 
 <%- include('footer') -%>

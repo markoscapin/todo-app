@@ -21,7 +21,7 @@ The designs were created to the following widths:
 ### Light Theme
 
 1) Background
-- Very Light Gray: hsl(0, 0%, 98%)
+- Very Light Gray: hsl(0, 0%, 98%)  OK
 
 3) Text item completed
 - Light Grayish Blue: hsl(233, 11%, 84%)
@@ -29,7 +29,7 @@ The designs were created to the following widths:
 4) Menu a e drag and drop
 - Dark Grayish Blue: hsl(236, 9%, 61%)
 
-5) Test
+5) Text
 - Very Dark Grayish Blue: hsl(235, 19%, 35%)
 
 ### Dark Theme

@@ -1,6 +1,7 @@
 //Standard Variables
 let boxArray = document.querySelectorAll(".tasks-wrapper .item-box");
 let clearCompletedTask = document.querySelector("#clear-Completed");
+const body = document.body;
 
 //Variables for posting
 let currentPath = document.location.pathname;
@@ -18,47 +19,54 @@ let nextIndex = "";
 
 
 //Variables for Light and Dark Mode
-let changeMode = document.querySelector(".toggle-mode")
-let background = document.querySelectorAll(".bgr-view")
+let currentMode = (document.querySelector("[name='mode']").value == null) ? "" : document.querySelector('[name="mode"]').value;
+let setMode = ""
+//Single
+const background = document.querySelector(".bgr-view")
+const changeMode = document.querySelector(".toggle-mode")
+const createTask = document.querySelector(".create-task")
+const taskContainer = document.querySelector(".tasks-container")
+const tasksBottom = document.querySelector(".tasks-bottom")
+const textInput = document.querySelector('[type="text"]')
 
 
-let currentMode = "";
+//Arrays
+const btn = document.querySelectorAll(".btn")
+const tasksWrapper = document.querySelectorAll(".tasks-wrapper");
+const dropZone = document.querySelectorAll(".drop-zone");
+//for #menu a we have already a const
 
-if (currentMode == "") {
-    let today = new Date();
-    let hours = today.getHours();
-    if (hours >= 7 && hours <= 18 ) {
-        currentMode = "light"
-        lightMode()
-    } else {
-        currentMode = "dark"
-        darkMode()
-    }
-}
-
-
-changeMode.addEventListener('click', function() {
-    if (currentMode == "light") {
-        currentMode = "dark";
-        darkMode()
-    } else if (currentMode == "dark") {
-        currentMode =  "light"
-        lightMode()
-    }
-})
+//FUNCTIONS
 
 function lightMode() {
-    console.log("lightmode on")
+    background.style.backgroundImage = 'url("../images/bg-desktop-light.jpg")';
+    body.style.backgroundColor = "hsl(0, 0%, 98%)";
+    taskContainer.style.backgroundColor = "white";
+    createTask.style.backgroundColor = "white";
+    body.querySelectorAll("p").forEach((p)=> p.style.color = "hsl(235, 19%, 35%)");
+    textInput.style.color = "hsl(235, 19%, 35%)";
+    dropZone.forEach((zone)=> zone.style.backgroundColor = "hsl(235, 21%, 11%)")
+    changeMode.querySelector("img").src = "images/icon-moon.svg"
+    
+    
+    
+
 }
 
 function darkMode() {
-    console.log("darkmode-on")
+    background.style.backgroundImage = 'url("../images/bg-desktop-dark.jpg")';
+    body.style.backgroundColor = "hsl(235, 21%, 11%)"
+    taskContainer.style.backgroundColor = "hsl(235, 24%, 19%)";
+    createTask.style.backgroundColor = "hsl(235, 24%, 19%)";
+    body.querySelectorAll("p").forEach((p)=> p.style.color = "hsl(234, 39%, 85%)")
+    textInput.style.color = "hsl(234, 39%, 85%)"
+    dropZone.forEach((zone)=> zone.style.backgroundColor = "white")
+    changeMode.querySelector("img").src = "images/icon-sun.svg"
+    
+    
+
+    
 }
-
-
-
-
-
 
 //This function allow us to make a POST request
 function post(path, params, method='post') {
@@ -89,6 +97,8 @@ function setDragger(index, id, e) {
     elementID = id;
 };
 
+
+//SWITCHER FOR THE CURRENT PATH
 switch (currentPath) {
     case "/" : 
         rootPath.style.color = "hsl(220, 98%, 61%)"
@@ -105,6 +115,7 @@ switch (currentPath) {
 };
 
 
+//DRAG - DROP / HOVERING AND STATUS OF EVERY TASK
 //This is to add the listener and make a POST request to change the index value to db
 boxArray.forEach(function(task) {
     task.addEventListener('dragenter', function(event) {
@@ -120,13 +131,20 @@ boxArray.forEach(function(task) {
 
     }, false);
 
-    task.addEventListener('dragover', function(event) {
-        event.target.classList.add('drop-zone')
-    });
 
-    task.addEventListener('dragleave', function(event){
-        event.target.classList.remove('drop-zone')
-    });
+
+    
+        task.addEventListener('dragover', function(event) {
+            event.target.classList.add('drop-zone')
+
+        });
+    
+        task.addEventListener('dragleave', function(event){
+            event.target.classList.remove('drop-zone')
+  
+        });
+
+
 
 
     task.addEventListener('drop', function(event) {  
@@ -143,6 +161,7 @@ boxArray.forEach(function(task) {
         button.classList.add("btn-check");
         img.src = "images/icon-check.svg";
         text.style.textDecoration = "line-through";
+        text.classList.add("task-checked");
     };
 
     task.addEventListener('mouseenter', function() {
@@ -155,6 +174,8 @@ boxArray.forEach(function(task) {
 
 });
 
+
+//DELETE ALL COPMLETED TASKS
 //This execute a "delete" record on DB and refresh
 clearCompletedTask.addEventListener('click', function(){
     post("/deleteAllCompleted")
@@ -162,6 +183,31 @@ clearCompletedTask.addEventListener('click', function(){
 
 
 
+//DARK AND LIGHT MODE 
+//Post a change of mode - NEEDED because we always refresh the db and the root from server
+changeMode.addEventListener("click", function() {
+    (currentMode == "light") ? setMode = "dark" : setMode = "light"
+    post("/mode", {setMode : setMode});
+})
+
+//Allow to have a default mode and switch in case selected a dark/light mode
+if (currentMode == "") {
+    let today = new Date();
+    let hours = today.getHours();
+    if (hours >= 7 && hours <= 18 ) {
+        currentMode = "light"
+        lightMode();
+    } else {
+        currentMode = "dark"
+        darkMode();
+    }
+} else if (currentMode == "light") {
+    lightMode();
+} else if (currentMode == "dark") {
+    darkMode();
+}
+
+textInput.classList.add('placeholder')
 
 
 
