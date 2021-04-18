@@ -20,7 +20,7 @@ app.use(express.static(__dirname + '/public'));
 
 
 //MONGOOSE SECTION
-mongoose.connect('mongodb://localhost:27017/todoAppDB', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/todoAppDB', {useNewUrlParser: true, useUnifiedTopology: true,  useFindAndModify: false });
 
 const tasksSchema = {
     name: String,
@@ -94,8 +94,6 @@ app.get("/active", function(req, res) {
         taskArray = taskArray.sort(compareNumbers);
 
         (err) ? console.log(err) : res.render('index', {taskArray: taskArray, currentMode : currentMode})
-
-
     });
     
 });
@@ -163,16 +161,28 @@ app.post("/deleteAllCompleted", function(req, res) {
     //Find all docs and if the doc has as propery status "true" than remove it.
     Task.find({}, function(err, docs) {
         (err) ? console.log(err) : console.log("goingtoDB");
+        //This is super important to have a new index for all NON completed tasks
+        const currentList = [];
+
 
         docs.forEach(function(task) {
-            console.log(task.status)
-            
             if (task.status == true) {
                 Task.findByIdAndRemove(task._id, function(err){
                     (err) ? console.log(err) : console.log("Successfully delete record")
                 })
+            } else if (task.status == false) {
+                //push all NON completed task on currentList array
+                currentList.push(task)
             }
         })
+        
+        //Here we have to reset all indexes.
+        for ( let i = 0; i< currentList.length; i++) {
+            console.log("index is: " + i);
+            Task.findByIdAndUpdate(currentList[i]._id, {index : i}, function(err, document) {
+                (err) ? console.log(err) : console.log("successfully updated")
+            });
+        }
     })
 
     res.redirect("/");

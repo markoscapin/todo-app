@@ -31,7 +31,7 @@
 
                     <div class="item-box" draggable="true" ondragover="return false" ondragstart="setDragger('<%= task.index %>', '<%= task._id %>')" >
 
-                        <form action="/taskCompleted" method="POST" >
+                        <form class="task-form" action="/taskCompleted" method="POST" >
                             <input type="hidden" name="index" value="<%= task.index %>">
                             <input type="hidden" name="nextIndex" value="">
 

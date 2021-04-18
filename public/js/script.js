@@ -7,10 +7,11 @@ const body = document.body;
 let currentPath = document.location.pathname;
 
 //Variables for switching menu ALL, ACTIVE, COMPLETED
-const menu = document.querySelectorAll("#menu a");
-const rootPath = menu[0];
-const activePath = menu[1];
-const completedPath = menu[2];
+const menuDiv = document.querySelector("#menu");
+const menuList = menuDiv.querySelectorAll("a");
+const rootPath = menuList[0];
+const activePath = menuList[1];
+const completedPath = menuList[2];
 
 //Variables for Drag and Drop functions
 let elementIndex="";
@@ -22,13 +23,15 @@ let nextIndex = "";
 let currentMode = (document.querySelector("[name='mode']").value == null) ? "" : document.querySelector('[name="mode"]').value;
 let setMode = ""
 //Single
+
 const background = document.querySelector(".bgr-view")
 const changeMode = document.querySelector(".toggle-mode")
 const createTask = document.querySelector(".create-task")
 const taskContainer = document.querySelector(".tasks-container")
 const tasksBottom = document.querySelector(".tasks-bottom")
 const textInput = document.querySelector('[type="text"]')
-
+// Get the root element (CSS variables)
+const r = document.querySelector(':root');
 
 //Arrays
 const btn = document.querySelectorAll(".btn")
@@ -38,6 +41,31 @@ const dropZone = document.querySelectorAll(".drop-zone");
 
 //FUNCTIONS
 
+// Create a function for setting a variable value
+function bgColor_ModeVAR() {
+    if (currentMode == "light") {
+        // Set the value of variable --blue to another value (in this case "lightblue")
+        r.style.setProperty('--bgColor-mode', "white");
+    } else if (currentMode == "dark") {
+        r.style.setProperty('--bgColor-mode', "hsl(235, 24%, 19%)");
+    }
+}
+
+//Change color on hovering an Array of elements (Only with querySelectorAll)
+function hover(elements, hoveringStyle) {
+
+    elements.forEach(function(aElement) {
+        const defaultColor = aElement.style.color
+        aElement.addEventListener('mouseenter', function() {
+            aElement.style.color = hoveringStyle
+        });
+    
+        aElement.addEventListener('mouseleave', function() {
+            aElement.style.color = defaultColor
+        });
+    });
+};
+
 function lightMode() {
     background.style.backgroundImage = 'url("../images/bg-desktop-light.jpg")';
     body.style.backgroundColor = "hsl(0, 0%, 98%)";
@@ -46,12 +74,10 @@ function lightMode() {
     body.querySelectorAll("p").forEach((p)=> p.style.color = "hsl(235, 19%, 35%)");
     textInput.style.color = "hsl(235, 19%, 35%)";
     dropZone.forEach((zone)=> zone.style.backgroundColor = "hsl(235, 21%, 11%)")
-    changeMode.querySelector("img").src = "images/icon-moon.svg"
-    
-    
-    
-
-}
+    changeMode.querySelector("img").src = "images/icon-moon.svg";
+    hover(menuList, "hsl(235, 21%, 11%)")
+    bgColor_ModeVAR()
+};
 
 function darkMode() {
     background.style.backgroundImage = 'url("../images/bg-desktop-dark.jpg")';
@@ -62,11 +88,10 @@ function darkMode() {
     textInput.style.color = "hsl(234, 39%, 85%)"
     dropZone.forEach((zone)=> zone.style.backgroundColor = "white")
     changeMode.querySelector("img").src = "images/icon-sun.svg"
-    
-    
+    hover(menuList, "white")
+    bgColor_ModeVAR()
 
-    
-}
+};
 
 //This function allow us to make a POST request
 function post(path, params, method='post') {
@@ -83,10 +108,9 @@ function post(path, params, method='post') {
         hiddenField.name = key;
         hiddenField.value = params[key];
 
-
         form.appendChild(hiddenField);
-      }
-    }
+      };
+    };
   
     document.body.appendChild(form);
     form.submit();
@@ -131,21 +155,13 @@ boxArray.forEach(function(task) {
 
     }, false);
 
-
-
+    task.addEventListener('dragover', function(event) {
+        event.target.classList.add('drop-zone')
+    });
     
-        task.addEventListener('dragover', function(event) {
-            event.target.classList.add('drop-zone')
-
-        });
-    
-        task.addEventListener('dragleave', function(event){
-            event.target.classList.remove('drop-zone')
-  
-        });
-
-
-
+    task.addEventListener('dragleave', function(event){
+        event.target.classList.remove('drop-zone')
+    });
 
     task.addEventListener('drop', function(event) {  
 
@@ -182,7 +198,6 @@ clearCompletedTask.addEventListener('click', function(){
 })
 
 
-
 //DARK AND LIGHT MODE 
 //Post a change of mode - NEEDED because we always refresh the db and the root from server
 changeMode.addEventListener("click", function() {
@@ -205,9 +220,13 @@ if (currentMode == "") {
     lightMode();
 } else if (currentMode == "dark") {
     darkMode();
-}
+};
 
-textInput.classList.add('placeholder')
+textInput.classList.add('placeholder');
+
+
+
+
 
 
 

@@ -1,3 +1,11 @@
+/* ROOT */
+:root {
+    --bgColor-mode : "white";
+    --standard-shadow : 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 60px rgba(0, 0, 0, 0.23);
+    --radius :5px;
+    
+}
+
 /* TAGS */
 
 * {
@@ -15,9 +23,10 @@ button {
 }
 
 main {
-    margin: 5vh 0;
-    max-width: 50%;
+    width: 35rem;
+    max-width: 80vw;
     margin: auto;
+    margin-top: 5vh;
 }
 
 h1 {
@@ -30,7 +39,8 @@ form {
 }
 
 input,
-button {
+button,
+.toggle-mode:focus {
     outline: none;
 }
 
@@ -38,6 +48,7 @@ input[type="text"] {
     background-color: transparent;
     border: none;
     font-family: 'Josefin Sans', sans-serif;
+    width: 100%;
 }
 
 /* IDs */
@@ -57,10 +68,10 @@ input[type="text"] {
     font-weight: 700;
 }
 
-#menu a:hover,
-#menu a:active,
+
 #clear-Completed:hover {
     color: white;
+    box-shadow: 0 0 5px #DC3545;
     
 }
 
@@ -76,6 +87,10 @@ input[type="text"] {
     text-align: center;
     margin-top: 3rem;
 
+}
+
+#deleteTask {
+    min-width: 18px;
 }
 
 /* CLASSES */
@@ -110,6 +125,7 @@ input[type="text"] {
 .btn {
     background-color: transparent;
     border-radius: 100%;
+    min-width: 20px;
     width: 20px;
     height: 20px;
     border: 1px solid hsl(236, 9%, 61%);
@@ -139,6 +155,7 @@ input[type="text"] {
     position: relative;
     width: 18px;
     height: 18px;
+    
 }
 
 .deleteBtn::before {
@@ -154,12 +171,20 @@ input[type="text"] {
 }
 
 .drop-zone {
-    border-radius: 5px;
+    border-radius: var(--radius);
     background: linear-gradient(-45deg, hsl(280, 87%, 65%), hsl(192, 100%, 67%))
 }
 
+.task-form{
+    width: 100%;
+}
+
+.task-form p {
+    word-wrap: break-word;
+}
+
 .hidden-delete-form {
-    display: none;
+    visibility: hidden;
 }
 
 /* This is to modify the first input box */
@@ -167,7 +192,7 @@ input[type="text"] {
     justify-content: flex-start;
     align-items: flex-end;
     border-bottom: none;
-    border-radius: 5px;
+    border-radius: var(--radius);
     margin: 1rem 0 2rem;
 }
 
@@ -193,7 +218,7 @@ input[type="text"] {
 
 .not-selected {
     opacity: 0.5;
-    border-radius: 5px;
+    border-radius: var(--radius);
 }
 
 .placeholder {
@@ -222,8 +247,8 @@ input[type="text"] {
 }
 
 .tasks-container {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 60px rgba(0, 0, 0, 0.23);
-    border-radius: 5px;
+    box-shadow: var(--standard-shadow);
+    border-radius: var(--radius);
 }
 
 /* Tasks boxes */
@@ -243,18 +268,11 @@ input[type="text"] {
     border: none;
 }
 
-.toggle-mode:focus {
-    outline: none;
-}
-
 
 
 
 @media (max-width: 900px) {
     /* TAGs */
-    main {
-        max-width: 80%;
-    }
     /* IDs */
     #clear-Completed {
     max-width: 5rem;
@@ -265,4 +283,54 @@ input[type="text"] {
 
 
 
+}
+
+@media (max-width: 500px) {
+    /* TAGs */
+    /* IDs */
+    #menu {
+        position: absolute;
+        justify-content: center;
+        bottom: -6rem;
+        left: 0;
+        width: 100%;
+        background-color: var(--bgColor-mode);
+        min-width: 100%;
+        max-width: 100%;
+        padding: 1rem 0;
+        box-shadow: var(--standard-shadow);
+        border-radius: var(--radius);
+    }
+
+    #clear-Completed {
+        max-width: 100%;
+    }
+    /* CLASSES */
+    .tasks-bottom {
+        position: relative;
+    }
+    .hidden-delete-form {
+        visibility: visible;
+    }
+    
+}
+
+@media (max-width: 250px) {
+    #menu {
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        bottom: -10rem;
+    }
+
+    #menu a {
+        padding: 0.5rem;
+    }
+    .tasks-bottom {
+        flex-direction: column;
+    }
+    .tasks-bottom p {
+        padding-bottom: 0.5rem;
+    }
+    
 }
