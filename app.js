@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({extended : true}));
 app.use(express.static(__dirname + '/public'));
 
 
-//MONGOOSE SECTION
+//MONGOOSE SECTION 
 mongoose.connect('mongodb://localhost:27017/todoAppDB', {useNewUrlParser: true, useUnifiedTopology: true,  useFindAndModify: false });
 
 const tasksSchema = {

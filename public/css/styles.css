@@ -3,7 +3,10 @@
     --bgColor-mode : "white";
     --standard-shadow : 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 60px rgba(0, 0, 0, 0.23);
     --radius :5px;
-    
+    --font: 'Josefin Sans', sans-serif;
+    --purpleColor: hsl(280, 87%, 65%);
+    --blueColor: hsl(192, 100%, 67%);
+    --linearColors: linear-gradient(-45deg, var(--purpleColor) , var(--blueColor))
 }
 
 /* TAGS */
@@ -14,11 +17,11 @@
 }
 
 body {
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: var(--font);
 }
 
 button {
-    font-family: 'Josefin Sans', sans-serif !important;
+    font-family: var(--font)!important;
     cursor: pointer;
 }
 
@@ -47,7 +50,7 @@ button,
 input[type="text"] {
     background-color: transparent;
     border: none;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: var(--font);
     width: 100%;
 }
 
@@ -72,7 +75,6 @@ input[type="text"] {
 #clear-Completed:hover {
     color: white;
     box-shadow: 0 0 5px #DC3545;
-    
 }
 
 #clear-Completed {
@@ -86,7 +88,6 @@ input[type="text"] {
 #info-descr {
     text-align: center;
     margin-top: 3rem;
-
 }
 
 #deleteTask {
@@ -101,7 +102,6 @@ input[type="text"] {
     position: absolute;
     bottom: 1rem;
     width: 100%;
-
 }
 
 .attribution a {
@@ -137,14 +137,14 @@ input[type="text"] {
 
 .btn:hover {
     box-shadow:
-        0.5px 0.5px 3px hsl(280, 87%, 65%),
-        -0.5px -0.5px 3px hsl(192, 100%, 67%);
+        0.5px 0.5px 3px var(--purpleColor),
+        -0.5px -0.5px 3px var(--blueColor);
     border: none;
 
 }
 
 .btn-check {
-    background: linear-gradient(-45deg, hsl(280, 87%, 65%), hsl(192, 100%, 67%));
+    background: var(--linearColors);
 }
 
 
@@ -172,15 +172,7 @@ input[type="text"] {
 
 .drop-zone {
     border-radius: var(--radius);
-    background: linear-gradient(-45deg, hsl(280, 87%, 65%), hsl(192, 100%, 67%))
-}
-
-.task-form{
-    width: 100%;
-}
-
-.task-form p {
-    word-wrap: break-word;
+    background: var(--linearColors);
 }
 
 .hidden-delete-form {
@@ -222,7 +214,7 @@ input[type="text"] {
 }
 
 .placeholder {
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: var(--font);
     color: hsl(236, 33%, 92%);
 }
 
@@ -251,7 +243,14 @@ input[type="text"] {
     border-radius: var(--radius);
 }
 
-/* Tasks boxes */
+.task-form{
+    width: 100%;
+}
+
+.task-form p {
+    word-wrap: break-word;
+}
+
 .tasks-wrapper {
     margin-top: 1rem;
 }
@@ -262,13 +261,13 @@ input[type="text"] {
     max-width: 90%;
 }
 
-/* Toggle button for Dark / Light mode */
 .toggle-mode {
     background-color: transparent;
     border: none;
 }
 
 
+/* --------------------------------> MEDIA QUERY <--------------------------------*/
 
 
 @media (max-width: 900px) {
@@ -316,6 +315,8 @@ input[type="text"] {
 }
 
 @media (max-width: 250px) {
+    /* TAGs */
+    /* IDs */
     #menu {
         flex-direction: column;
         justify-content: space-evenly;
@@ -326,6 +327,7 @@ input[type="text"] {
     #menu a {
         padding: 0.5rem;
     }
+    /* CLASSES */
     .tasks-bottom {
         flex-direction: column;
     }
