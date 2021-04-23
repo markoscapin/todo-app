@@ -31,11 +31,15 @@ const tasksSchema = {
 const Task = mongoose.model("Task", tasksSchema);
 
 //Functions
-function toggle (mongooseObject) {
+function toggle (mongooseObject, res) {
     if (mongooseObject.status) {
-        Task.findByIdAndUpdate(mongooseObject._id, {status: false}, (err) => console.log("New status is " + mongooseObject.status));
+        Task.findByIdAndUpdate(mongooseObject._id, {status: false}, (err) => 
+        (err) ? console.log(err) : res.redirect("/"))
+        
     } else {
-        Task.findByIdAndUpdate(mongooseObject._id, {status: true}, (err) => console.log("New status is " + mongooseObject.status));
+        Task.findByIdAndUpdate(mongooseObject._id, {status: true}, (err) => 
+        (err) ? console.log(err) : res.redirect("/"));
+
     }
 };
 
@@ -43,7 +47,6 @@ function toggle (mongooseObject) {
 function compareNumbers(a, b) {
     return a.index - b.index;
 }
-
 
 
 //global variable to know the previews path in case of redirect
@@ -54,13 +57,17 @@ let previewsURLRequest = "";
 app.get("/", function(req, res) {
 
     if (previewsURLRequest == "" || previewsURLRequest == "/") {
+        
         Task.find({}, function(err, taskArray) {
+            console.log(taskArray)
 
             //.sort() return an orderedArray
             taskArray = taskArray.sort(compareNumbers);
     
             (err) ? console.log(err) : res.render('index', {taskArray: taskArray, currentMode : currentMode})
             });
+
+        
     } else {
         res.redirect("" + previewsURLRequest)
     }
@@ -126,9 +133,11 @@ app.post("/", function(req, res) {
     Task.find({}, function(err, taskArray) {
         const newTask = new Task({name:newTaskToAdd, index: taskArray.length, status: false});
         newTask.save();
+        res.redirect("/");
     });
     
-    res.redirect("/");
+    
+    
 })
 
 app.post("/taskCompleted", function(req, res) {
@@ -136,11 +145,10 @@ app.post("/taskCompleted", function(req, res) {
     const taskCompletedID = req.body.checkbox;
 
     Task.findById(taskCompletedID, function(err, task) {
-        (err) ? console.log(err) : toggle(task);
-        } 
-    );
+        (err) ? console.log(err) : toggle(task, res);
+    });
 
-    res.redirect("/");
+   
 });
 
 app.post("/deleteTask", function(req, res) {
@@ -183,10 +191,10 @@ app.post("/deleteAllCompleted", function(req, res) {
                 (err) ? console.log(err) : console.log("successfully updated")
             });
         }
-    })
 
-    res.redirect("/");
-})
+        res.redirect("/");
+    })
+});
 
 
 app.post("/drag", function(req, res) {
@@ -230,11 +238,9 @@ app.post("/drag", function(req, res) {
 
         Task.findByIdAndUpdate(elementID, {index: nextIndex}, function(err) {
             (err) ? console.log(err) : console.log("Was " + currentIndex)
+            res.redirect("/");
         });
     });
-
-
-    res.redirect("/");
 });
 
 
